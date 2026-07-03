@@ -1,0 +1,19 @@
+public class GameTheme {
+    private String themeName;
+    private String setting;
+
+    public GameTheme(String themeName, String setting) {
+        this.themeName = themeName;
+        this.setting = setting;
+    }
+
+    public String getThemeName() { return themeName; }
+    public void setThemeName(String themeName) { this.themeName = themeName; }
+
+    public String getSetting() { return setting; }
+    public void setSetting(String setting) { this.setting = setting; }
+
+    public void display() {
+        System.out.println(" -> Active Theme: " + themeName + " (" + setting + ")");
+    }
+}
