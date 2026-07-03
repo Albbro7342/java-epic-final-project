@@ -1,0 +1,102 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class MainMenu {
+
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+     int choice = 0;
+     
+     ArrayList<Character> party = new ArrayList<>();
+     ArrayList<GameTheme> activeThemes = new ArrayList<>();
+     
+     System.out.println("Welcome to the Java EPIC Final Project\n");
+     
+     do {
+         System.out.println("=========== MAIN MENU ===========");
+         System.out.println("1 Create Player");
+         System.out.println("2 Choose Game Theme");
+         System.out.println("3 View Player");
+         System.out.println("4 Start Action");
+         System.out.println("5 Exit");
+         System.out.print("Enter your choice: ");
+         
+         if (scanner.hasNextInt()) {
+             choice = scanner.nextInt();
+             scanner.nextLine(); 
+             System.out.println();
+             
+             switch (choice) {
+             case 1:
+                
+                 System.out.println("Creating player...");
+                 System.out.print("Enter player name: ");
+                 String name = scanner.nextLine();
+                 System.out.print("Enter player role (e.g., Hero, Rogue): ");
+                 String role = scanner.nextLine();
+                 System.out.print("Enter player starting level: ");
+                 int level = scanner.nextInt();
+                 scanner.nextLine(); 
+                 
+                 party.add(new Character(name, role, level));
+                 System.out.println("\nSuccessfully created character: " + name);
+                 break;
+             
+             case 2:
+                 System.out.println("Choosing game theme...");
+                 System.out.print("Enter Theme Name (e.g., Sci-Fi, Dark Fantasy): ");
+                 String themeName = scanner.nextLine();
+                 System.out.print("Enter Setting Description: ");
+                 String setting = scanner.nextLine();
+                 
+                 activeThemes.clear();
+                 activeThemes.add(new GameTheme(themeName, setting));
+                 System.out.println("\nGame theme set to: " + themeName);
+                 break;
+                 
+             case 3:
+
+                 System.out.println("Viewing player info...");
+                 System.out.println("=== PARTY ROSTER ===");
+                 if (party.isEmpty()) {
+                     System.out.println(" (No characters registered yet. Choose Option 1)");
+                 } else {
+                     for (Character p : party) {
+                         p.display(); 
+                     }
+                 }
+                 
+                 System.out.println("\n=== WORLD SETTING ===");
+                 if (activeThemes.isEmpty()) {
+                     System.out.println(" (No active game theme selected. Choose Option 2)");
+                 } else {
+                     activeThemes.get(0).display();
+                 }
+                 break;
+            
+             case 4:
+                 System.out.println("Starting action!");
+                 if (party.isEmpty()) {
+                     System.out.println("Action failed: Your party roster is empty!");
+                 } else {
+                     String currentWorld = activeThemes.isEmpty() ? "the Sandbox environment" : activeThemes.get(0).getThemeName();
+                     System.out.println(party.get(0).getName() + " charges boldly forward into " + currentWorld + "!");
+                 }
+                 break;
+             case 5:
+                 System.out.println("Goodbye!");
+                 break;
+             default:
+                 System.out.println("Invalid choice. Please pick an option between 1 and 5.\n");
+         }
+     } else {
+         System.out.println("\nInvalid input. Please enter a valid number.\n");
+         scanner.next(); 
+     }
+         
+         System.out.println();
+     } while (choice != 5);
+
+     scanner.close();
+	}
+}
