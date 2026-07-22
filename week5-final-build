@@ -1,1 +1,108 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+// Custom Player class to store character information
+class Player {
+    private String name;
+
+    public Player(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+public class MainMenu {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int choice = 0;
+        
+        // Using 'Player' to avoid conflicts with java.lang.Character
+        ArrayList<Player> party = new ArrayList<>();
+        String gameTheme = "Not Selected";
+
+        System.out.println("Welcome to the Java Epic Final Project\n");
+
+        do {
+            System.out.println("=========== Main Menu ===========");
+            System.out.println("1 Create Player");
+            System.out.println("2 Choose Game Theme");
+            System.out.println("3 View Player");
+            System.out.println("4 Start Action");
+            System.out.println("5 Exit");
+            System.out.print("Enter your choice: ");
+
+            if (scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+                scanner.nextLine(); // Critical: Clears the leftover newline character from the buffer
+                System.out.println();
+
+                switch (choice) {
+                    case 1:
+                        System.out.print("Enter player name: ");
+                        String name = scanner.nextLine();
+                        party.add(new Player(name));
+                        System.out.println("Player '" + name + "' successfully created and added to the party!");
+                        break;
+
+                    case 2:
+                        System.out.println("Select a Game Theme:");
+                        System.out.println("1. Fantasy");
+                        System.out.println("2. Sci-Fi");
+                        System.out.println("3. Cyberpunk");
+                        System.out.print("Enter choice: ");
+                        
+                        if (scanner.hasNextInt()) {
+                            int themeChoice = scanner.nextInt();
+                            scanner.nextLine(); // Clear buffer
+                            if (themeChoice == 1) gameTheme = "Fantasy";
+                            else if (themeChoice == 2) gameTheme = "Sci-Fi";
+                            else if (themeChoice == 3) gameTheme = "Cyberpunk";
+                            else gameTheme = "Custom";
+                            System.out.println("Theme set to: " + gameTheme);
+                        } else {
+                            System.out.println("Invalid theme selection.");
+                            scanner.nextLine(); // Clear buffer
+                        }
+                        break;
+
+                    case 3:
+                        System.out.println("=== Current Party Status ===");
+                        System.out.println("Theme: " + gameTheme);
+                        if (party.isEmpty()) {
+                            System.out.println("Your party is currently empty. Go to option 1 to create a player!");
+                        } else {
+                            for (int i = 0; i < party.size(); i++) {
+                                System.out.println("Player " + (i + 1) + ": " + party.get(i).getName());
+                            }
+                        }
+                        break;
+
+                    case 4:
+                        if (party.isEmpty()) {
+                            System.out.println("Cannot start action! You must create at least one player first.");
+                        } else {
+                            System.out.println("Starting action with theme [" + gameTheme + "] and a party of " + party.size() + " player(s)!");
+                        }
+                        break;
+
+                    case 5:
+                        System.out.println("Goodbye!");
+                        break;
+
+                    default:
+                        System.out.println("Invalid choice. Please pick an option between 1 and 5.");
+                }
+            } else {
+                System.out.println("\nInvalid input. Please enter a valid number.");
+                scanner.next(); // Clears the invalid non-integer string from the scanner token
+            }
+            System.out.println();
+        } while (choice != 5);
+
+        scanner.close();
+    }
+}
 
